@@ -1,26 +1,28 @@
 package db.controller;
 
-import db.model.X;
+import db.model.DataAccess;
 import db.view.ViewFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
-public class RedirectAdminController extends BaseController{
+public class RedirectAdminController extends BaseController {
 
-    public RedirectAdminController(X x, ViewFactory viewFactory, String fxmlName) {
-        super(x, viewFactory, fxmlName);
+    public RedirectAdminController(DataAccess dataAccess, ViewFactory viewFactory, String fxmlName) {
+        super(dataAccess, viewFactory, fxmlName);
     }
+
+    public static boolean isClicked = false;
 
     @FXML
     void adminPageRedirectButon(ActionEvent event) {
-
+        viewFactory.showAdminPageController();
     }
 
     @FXML
     void userPageRedirectButon(ActionEvent event) throws SQLException {
+        isClicked = true;
         viewFactory.showEmployeeWindow();
     }
 

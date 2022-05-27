@@ -1,8 +1,7 @@
 package db.controller;
 
 import db.model.BusinessRules;
-import db.model.Employee;
-import db.model.X;
+import db.model.DataAccess;
 import db.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -45,7 +44,7 @@ public class SignUpController extends BaseController {
     @FXML
     void signupButton() throws SQLException {
         BusinessRules businessRules = new BusinessRules();
-        X x = new X();
+        DataAccess dataAccess = new DataAccess();
         String department = departmentChoiceBox.getValue();
         int departmentId = 0;
         switch (department){
@@ -60,15 +59,15 @@ public class SignUpController extends BaseController {
         Date birthdate = java.sql.Date.valueOf(birthdateDatePicker.getValue());
         boolean isAppropriate = businessRules.isAppropriate(firstNameTextField.getText(),lastNameTextField.getText(),emailTextField.getText(),passwordField.getText(), phoneNumberTextField.getText(), ssnTextField.getText());
         if(isAppropriate){
-            x.insertEmployee(ssnTextField.getText(), phoneNumberTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), genderChoiceBox.getValue().toString(),birthdate,departmentId);
-            x.insertAccount(emailTextField.getText(), passwordField.getText(),1002);
+            dataAccess.insertEmployee(ssnTextField.getText(), phoneNumberTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), genderChoiceBox.getValue().toString(),birthdate,departmentId);
+            dataAccess.insertAccount(emailTextField.getText(), passwordField.getText(),1002);
             infoLabel.setText("The register was successfully created");
         }else {
             infoLabel.setText("The information ");
         }
     }
 
-    public SignUpController(X x, ViewFactory viewFactory, String fxmlName) {
-        super(x, viewFactory, fxmlName);
+    public SignUpController(DataAccess dataAccess, ViewFactory viewFactory, String fxmlName) {
+        super(dataAccess, viewFactory, fxmlName);
     }
 }

@@ -1,9 +1,8 @@
 package db.controller;
 
 import db.model.Vacation;
-import db.model.X;
+import db.model.DataAccess;
 import db.view.ViewFactory;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -22,8 +20,8 @@ import java.util.ResourceBundle;
 
 public class EmployeeWindowController extends BaseController implements Initializable {
 
-    public EmployeeWindowController(X x, ViewFactory viewFactory, String fxmlName) {
-        super(x, viewFactory, fxmlName);
+    public EmployeeWindowController(DataAccess dataAccess, ViewFactory viewFactory, String fxmlName) {
+        super(dataAccess, viewFactory, fxmlName);
     }
 
     @FXML
@@ -58,13 +56,12 @@ public class EmployeeWindowController extends BaseController implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<Vacation> vacations = new ArrayList<>();
+        ObservableList<Vacation> vacationObservableList = null;
         try {
-            vacations = x.selectVacationsByEmployeeId(LoginWindowController.employee.eid);
+            vacationObservableList = FXCollections.observableList(dataAccess.selectVacationsByEmployeeId(LoginWindowController.employee.eid));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ObservableList<Vacation> vacationObservableList = FXCollections.observableList(vacations);
         col_start_date.setCellValueFactory(cellData-> cellData.getValue().startDate);
         col_finish_date.setCellValueFactory(cellData-> cellData.getValue().finishDate);
         _col_is_approved.setCellValueFactory(cellData->cellData.getValue().isApproved);

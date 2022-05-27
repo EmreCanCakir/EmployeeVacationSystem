@@ -1,18 +1,18 @@
 package db.controller;
 
-import db.model.X;
+import db.model.DataAccess;
 import db.view.ViewFactory;
 
 public abstract class BaseController {
 
     protected ViewFactory viewFactory;
     protected String fxmlName;
-    public X x;
+    public DataAccess dataAccess;
 
-    public BaseController(X x,ViewFactory viewFactory, String fxmlName ) {
+    public BaseController(DataAccess dataAccess, ViewFactory viewFactory, String fxmlName ) {
         this.viewFactory = viewFactory;
         this.fxmlName = fxmlName;
-        this.x = x;
+        this.dataAccess = dataAccess;
     }
 
     public String getFxmlName() {

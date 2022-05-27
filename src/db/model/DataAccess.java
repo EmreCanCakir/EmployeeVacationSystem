@@ -4,17 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class X {
+public class DataAccess {
     public static ArrayList<Employee> employees = new ArrayList<>();
     public ArrayList<Account> accounts = new ArrayList<>();
     public ArrayList<Vacation> vacations = new ArrayList<>();
     Employee employee;
     Account account;
-
-    public static void main(String[] args) throws SQLException {
-        selectEmployee();
-        //selectAccount();
-    }
 
     public static void selectEmployee() throws SQLException {
         Connection connection = null;
@@ -125,6 +120,40 @@ public class X {
         }
         return employee;
     }
+    public ArrayList<EmployeeVacationJoin> selectEmployeesNotInEmployeeId(int eid)throws SQLException{
+        Connection connection = null;
+        DbHelper helper = new DbHelper();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        ArrayList<EmployeeVacationJoin> employeeVacationJoins = new ArrayList<>();
+        try {
+            connection = helper.getConnection();
+            String sql = "select * from vacation inner join employee on vacation.employee_id = employee.eid where employee.eid !=?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,eid);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                employeeVacationJoins.add(
+                  new EmployeeVacationJoin(
+                          resultSet.getInt("id"),
+                          resultSet.getString("first_name"),
+                          resultSet.getString("last_name"),
+                          resultSet.getInt("department_id"),
+                          resultSet.getString("phone_number"),
+                          resultSet.getDate("start_date"),
+                          resultSet.getDate("finish_date"),
+                          resultSet.getString("type"),
+                          resultSet.getString("description"),
+                          resultSet.getBoolean("is_approved")
+                  ));
+            }
+        } catch (SQLException exception) {
+            helper.showErrorMessage(exception);
+        } finally {
+            connection.close();
+        }
+        return employeeVacationJoins;
+    }
 
     public ArrayList<Vacation> selectVacationsByEmployeeId(int employeeId) throws SQLException {
         Connection connection = null;
@@ -227,5 +256,27 @@ public class X {
             statement.close();
             connection.close();
         }
+    }
+    public boolean updateIsApprove(int num,int vid) throws SQLException {
+        Connection connection = null;
+        DbHelper helper = new DbHelper();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        try {
+            connection = helper.getConnection();
+            String sql = "update vacation set is_approved = ? where id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,num);
+            statement.setInt(2,vid);
+            statement.executeUpdate();
+            System.out.println("vacation update edildi. ");
+            return true;
+        } catch (SQLException exception) {
+            helper.showErrorMessage(exception);
+        } finally {
+            statement.close();
+            connection.close();
+        }
+        return false;
     }
 }

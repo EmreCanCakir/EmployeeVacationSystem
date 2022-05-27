@@ -3,7 +3,7 @@ package db.controller;
 import db.model.Account;
 import db.model.Employee;
 import db.model.Validation;
-import db.model.X;
+import db.model.DataAccess;
 import db.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -24,8 +24,8 @@ public class LoginWindowController extends BaseController{
     @FXML
     public PasswordField passwordField;
 
-    public LoginWindowController(X x, ViewFactory viewFactory, String fxmlName) {
-        super(x,viewFactory, fxmlName );
+    public LoginWindowController(DataAccess dataAccess, ViewFactory viewFactory, String fxmlName) {
+        super(dataAccess,viewFactory, fxmlName );
     }
     static Account account;
     public static Employee employee;
@@ -36,15 +36,15 @@ public class LoginWindowController extends BaseController{
         String email = emailField.getText();
         String password = passwordField.getText();
         if(validation.validateEmailAndPassword(email,password).result && validation.validateEmailAndPassword(email,password).result1){
-            account = x.selectAccountUsingEmail(email);
-            employee = x.selectEmployeeUsingEmployeeId(account.employeeId);
+            account = dataAccess.selectAccountUsingEmail(email);
+            employee = dataAccess.selectEmployeeUsingEmployeeId(account.employeeId);
             viewFactory.showRedirectAdminController();
             Stage stage =(Stage) errorLabel.getScene().getWindow();
             viewFactory.closeStage(stage);
             System.out.println("admin page is opening");
         }else if(validation.validateEmailAndPassword(email,password).result && !validation.validateEmailAndPassword(email,password).result1){
-            account = x.selectAccountUsingEmail(email);
-            employee = x.selectEmployeeUsingEmployeeId(account.employeeId);
+            account = dataAccess.selectAccountUsingEmail(email);
+            employee = dataAccess.selectEmployeeUsingEmployeeId(account.employeeId);
             viewFactory.showEmployeeWindow();
             Stage stage =(Stage) errorLabel.getScene().getWindow();
             viewFactory.closeStage(stage);

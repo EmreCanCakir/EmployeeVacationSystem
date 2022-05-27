@@ -6,11 +6,11 @@ import java.sql.SQLException;
 public class Validation {
 
     public static LoginResult<Boolean, Boolean> validateEmailAndPassword(String email, String password) throws SQLException {
-        X x = new X();
-        x.selectAccount();
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.selectAccount();
         int employeeId = 0;
-        for (int i = 0; i < x.accounts.size(); i++) {
-            if (x.accounts.get(i).email.equals(email) && x.accounts.get(i).password.equals(password)) {
+        for (int i = 0; i < dataAccess.accounts.size(); i++) {
+            if (dataAccess.accounts.get(i).email.equals(email) && dataAccess.accounts.get(i).password.equals(password)) {
                 employeeId = i + 1;
                 boolean isAdmin = isAdmin(employeeId);
                 return new LoginResult<>(true, isAdmin);
@@ -20,12 +20,12 @@ public class Validation {
     }
 
     public static boolean isAdmin(int index) throws SQLException {
-        X x = new X();
-        x.selectEmployee();
-        for (int i=0;i<x.employees.size();i++){
-            if(x.employees.get(i).eid == index){
-                if (x.employees.get(i).departmentId == 5 || x.employees.get(i).departmentId == 6){
-                    System.out.println("department id : " + x.employees.get(i).departmentId );
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.selectEmployee();
+        for (int i = 0; i< dataAccess.employees.size(); i++){
+            if(dataAccess.employees.get(i).eid == index){
+                if (dataAccess.employees.get(i).departmentId == 5 || dataAccess.employees.get(i).departmentId == 6){
+                    System.out.println("department id : " + dataAccess.employees.get(i).departmentId );
                     return true;
                 }
             }

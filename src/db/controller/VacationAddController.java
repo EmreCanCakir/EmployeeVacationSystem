@@ -2,7 +2,7 @@ package db.controller;
 
 import db.model.Account;
 import db.model.Employee;
-import db.model.X;
+import db.model.DataAccess;
 import db.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -31,19 +31,19 @@ public class VacationAddController extends BaseController {
     @FXML
     public ChoiceBox<String> typeChoiceBox;
 
-    public VacationAddController(X x, ViewFactory viewFactory, String fxmlName) {
-        super(x, viewFactory, fxmlName);
+    public VacationAddController(DataAccess dataAccess, ViewFactory viewFactory, String fxmlName) {
+        super(dataAccess, viewFactory, fxmlName);
     }
 
     @FXML
     void createVacation()throws SQLException {
-        X x = new X();
+        DataAccess dataAccess = new DataAccess();
         Account account;
         Employee employee;
         Date startDate = java.sql.Date.valueOf(startDateDatePicker.getValue());
         Date finishDate = java.sql.Date.valueOf(finishDateDatePicker.getValue());
         if(isNullValues(startDate,finishDate)){
-            x.insertVacationAdd(startDate,finishDate,typeChoiceBox.getValue(), LoginWindowController.account.employeeId,LoginWindowController.employee.departmentId, descriptionTextArea.getText());
+            dataAccess.insertVacationAdd(startDate,finishDate,typeChoiceBox.getValue(), LoginWindowController.account.employeeId,LoginWindowController.employee.departmentId, descriptionTextArea.getText());
             System.out.println("Vacation is added. ");
             viewFactory.showEmployeeWindow();
             Stage stage =(Stage) infoLabel.getScene().getWindow();

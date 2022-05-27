@@ -1,12 +1,8 @@
 package db;
 
-import db.controller.SignUpController;
-import db.model.X;
+import db.model.DataAccess;
 import db.view.ViewFactory;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
@@ -17,8 +13,8 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        X x = new X();
-        ViewFactory viewFactory = new ViewFactory(new X());
+        DataAccess dataAccess = new DataAccess();
+        ViewFactory viewFactory = new ViewFactory(new DataAccess());
         viewFactory.showLoginWindow();
     }
 }

@@ -1,34 +1,28 @@
 package db.view;
 
 import db.controller.*;
-import db.model.Vacation;
-import db.model.X;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import db.model.DataAccess;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class ViewFactory {
-    private X x;
+    private DataAccess dataAccess;
 
-    public ViewFactory(X x) {
-        this.x = x;
+    public ViewFactory(DataAccess dataAccess) {
+        this.dataAccess = dataAccess;
     }
 
     public void showLoginWindow() throws SQLException {
-        BaseController controller = new LoginWindowController(x,this,"loginWindow.fxml");
+        BaseController controller = new LoginWindowController(dataAccess,this,"loginWindow.fxml");
         initializeStage(controller);
     }
     public void showSignUpWindow(){
-        BaseController controller = new SignUpController(x,this,"signUp.fxml");
+        BaseController controller = new SignUpController(dataAccess,this,"signUp.fxml");
         initializeStage(controller);
         ((SignUpController) controller).genderChoiceBox.getItems().add("F");
         ((SignUpController) controller).genderChoiceBox.getItems().add("M");
@@ -41,7 +35,7 @@ public class ViewFactory {
 
     }
     public void showVacationAdd(){
-        BaseController controller = new VacationAddController(x,this,"vacationAdd.fxml");
+        BaseController controller = new VacationAddController(dataAccess,this,"vacationAdd.fxml");
         initializeStage(controller);
         ((VacationAddController) controller).typeChoiceBox.getItems().add("Pregnant Vacation");
         ((VacationAddController) controller).typeChoiceBox.getItems().add("Yearly Vacation");
@@ -50,11 +44,15 @@ public class ViewFactory {
         ((VacationAddController) controller).typeChoiceBox.getItems().add("Another");
     }
     public void showRedirectAdminController(){
-        BaseController controller = new RedirectAdminController(x,this,"redirectAdmin.fxml");
+        BaseController controller = new RedirectAdminController(dataAccess,this,"redirectAdmin.fxml");
         initializeStage(controller);
     }
     public void showEmployeeWindow() throws SQLException {
-        BaseController controller = new EmployeeWindowController(x,this,"employeeWindow.fxml");
+        BaseController controller = new EmployeeWindowController(dataAccess,this,"employeeWindow.fxml");
+        initializeStage(controller);
+    }
+    public void showAdminPageController(){
+        BaseController controller = new AdminWindowController(dataAccess,this,"adminWindow.fxml");
         initializeStage(controller);
     }
 
