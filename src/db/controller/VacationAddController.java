@@ -9,6 +9,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -44,6 +45,9 @@ public class VacationAddController extends BaseController {
         if(isNullValues(startDate,finishDate)){
             x.insertVacationAdd(startDate,finishDate,typeChoiceBox.getValue(), LoginWindowController.account.employeeId,LoginWindowController.employee.departmentId, descriptionTextArea.getText());
             System.out.println("Vacation is added. ");
+            viewFactory.showEmployeeWindow();
+            Stage stage =(Stage) infoLabel.getScene().getWindow();
+            viewFactory.closeStage(stage);
         }else {
             System.out.println("Vacation is NOT added !!!");
         }

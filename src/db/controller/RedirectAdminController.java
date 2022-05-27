@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+
 public class RedirectAdminController extends BaseController{
 
     public RedirectAdminController(X x, ViewFactory viewFactory, String fxmlName) {
@@ -18,8 +20,8 @@ public class RedirectAdminController extends BaseController{
     }
 
     @FXML
-    void userPageRedirectButon(ActionEvent event) {
-        viewFactory.showVacationAdd();
+    void userPageRedirectButon(ActionEvent event) throws SQLException {
+        viewFactory.showEmployeeWindow();
     }
 
 }

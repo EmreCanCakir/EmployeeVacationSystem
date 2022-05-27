@@ -1,14 +1,20 @@
 package db.view;
 
 import db.controller.*;
+import db.model.Vacation;
 import db.model.X;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ViewFactory {
     private X x;
@@ -43,8 +49,12 @@ public class ViewFactory {
         ((VacationAddController) controller).typeChoiceBox.getItems().add("Maternity Vacation");
         ((VacationAddController) controller).typeChoiceBox.getItems().add("Another");
     }
-    public void showRedirectAminController(){
+    public void showRedirectAdminController(){
         BaseController controller = new RedirectAdminController(x,this,"redirectAdmin.fxml");
+        initializeStage(controller);
+    }
+    public void showEmployeeWindow() throws SQLException {
+        BaseController controller = new EmployeeWindowController(x,this,"employeeWindow.fxml");
         initializeStage(controller);
     }
 

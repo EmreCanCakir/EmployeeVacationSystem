@@ -28,7 +28,7 @@ public class LoginWindowController extends BaseController{
         super(x,viewFactory, fxmlName );
     }
     static Account account;
-    static Employee employee;
+    public static Employee employee;
 
     @FXML
     void loginWindowAction() throws SQLException {
@@ -36,18 +36,18 @@ public class LoginWindowController extends BaseController{
         String email = emailField.getText();
         String password = passwordField.getText();
         if(validation.validateEmailAndPassword(email,password).result && validation.validateEmailAndPassword(email,password).result1){
-            viewFactory.showRedirectAminController();
-            Stage stage =(Stage) errorLabel.getScene().getWindow();
-            viewFactory.closeStage(stage);
             account = x.selectAccountUsingEmail(email);
             employee = x.selectEmployeeUsingEmployeeId(account.employeeId);
+            viewFactory.showRedirectAdminController();
+            Stage stage =(Stage) errorLabel.getScene().getWindow();
+            viewFactory.closeStage(stage);
             System.out.println("admin page is opening");
         }else if(validation.validateEmailAndPassword(email,password).result && !validation.validateEmailAndPassword(email,password).result1){
-            viewFactory.showVacationAdd();
-            Stage stage =(Stage) errorLabel.getScene().getWindow();
-            viewFactory.closeStage(stage);
             account = x.selectAccountUsingEmail(email);
             employee = x.selectEmployeeUsingEmployeeId(account.employeeId);
+            viewFactory.showEmployeeWindow();
+            Stage stage =(Stage) errorLabel.getScene().getWindow();
+            viewFactory.closeStage(stage);
             System.out.println(employee.firstName);
             System.out.println("kullanici sayfasi");
         }else {
