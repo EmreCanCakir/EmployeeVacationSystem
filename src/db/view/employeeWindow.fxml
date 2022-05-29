@@ -28,5 +28,10 @@
             <Font size="32.0" />
          </font>
       </Label>
+      <Button layoutX="358.0" layoutY="86.0" mnemonicParsing="false" onAction="#vacationUpdateInEmployeePageButton" prefHeight="32.0" prefWidth="190.0" text="Vacation Update">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

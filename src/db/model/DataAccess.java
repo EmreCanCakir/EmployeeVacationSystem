@@ -1,6 +1,7 @@
 package db.model;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -279,4 +280,30 @@ public class DataAccess {
         }
         return false;
     }
+    public boolean updateEmployeeVacation(LocalDate start_date, LocalDate finish_Date,String type,String description,int vid) throws SQLException {
+        Connection connection = null;
+        DbHelper helper = new DbHelper();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        try {
+            connection = helper.getConnection();
+            String sql = " update vacation set start_date = ?, finish_date=?,type = ?,description=? where id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setDate(1, java.sql.Date.valueOf(start_date));
+            statement.setDate(2, java.sql.Date.valueOf(finish_Date));
+            statement.setString(3,type);
+            statement.setString(4,description);
+            statement.setInt(5,vid);
+            statement.executeUpdate();
+            System.out.println("vacation update edildi. ");
+            return true;
+        } catch (SQLException exception) {
+            helper.showErrorMessage(exception);
+        } finally {
+            statement.close();
+            connection.close();
+        }
+        return false;
+    }
+
 }

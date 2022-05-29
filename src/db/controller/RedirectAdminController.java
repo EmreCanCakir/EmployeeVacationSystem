@@ -24,6 +24,7 @@ public class RedirectAdminController extends BaseController {
     void userPageRedirectButon(ActionEvent event) throws SQLException {
         isClicked = true;
         viewFactory.showEmployeeWindow();
+
     }
 
 }

@@ -53,6 +53,10 @@ public class EmployeeWindowController extends BaseController implements Initiali
         Stage stage =(Stage) tableView.getScene().getWindow();
         viewFactory.closeStage(stage);
     }
+    @FXML
+    void vacationUpdateInEmployeePageButton(ActionEvent event) {
+        viewFactory.showUpdateEmployeeVacationController();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
